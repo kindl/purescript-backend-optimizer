@@ -49,5 +49,5 @@ You can edit this file as you like.
   ]
 , packages = ./packages.dhall
 , sources =
-  [ "src/**/*.purs", "backend-es/src/**/*.purs", "backend-es/test/*.purs" ]
+  [ "src/**/*.purs", "backend-es/src/**/*.purs", "backend-es/test/*.purs", "backend-cpp/src/**/*.purs", "backend-cpp/src/**/*.purs" ]
 }

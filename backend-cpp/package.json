@@ -1,0 +1,43 @@
+{
+  "name": "purs-backend-cpp",
+  "version": "0.1.0",
+  "description": "A experimental cpp backend for purescript-backend-optimizer",
+  "main": "index.js",
+  "type": "module",
+  "files": [
+    "LICENSE",
+    "index.js",
+    "runtime.js",
+    "bundle/index.js"
+  ],
+  "bin": {
+    "purs-backend-cpp": "./index.js"
+  },
+  "scripts": {
+    "preversion": "npm run test && npm run test:output-diff",
+    "version": "echo 'export const version = \"v'$npm_package_version'\";' > ./src/Version.js && git add ./src/Version.js",
+    "postversion": "git commit -m \"Bump purs-backend-cpp version ($npm_package_version)\" && git tag purs-backend-cpp-v$npm_package_version && push && git push --tags",
+    "test": "cd .. && spago.cmd test",
+    "test:output-diff": "npm run build && cd ../ && ./backend-cpp/index.js build --int-tags --output-dir=output-cpp2 && diff -r output-cpp output-cpp2 && rm -r output-cpp2",
+    "build": "cd .. && spago.cmd build -u '-g corefn,js' && node ./backend-cpp/index.dev.js bundle-module -m Main --int-tags --platform=node --minify --to=./backend-cpp/bundle/index.js",
+    "prepublishOnly": "rm -rf bundle ../output ../output-cpp && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aristanetworks/purescript-backend-optimizer.git"
+  },
+  "keywords": [
+    "PureScript",
+    "backend",
+    "optimizer"
+  ],
+  "author": "Arista Networks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aristanetworks/purescript-backend-optimizer/issues"
+  },
+  "homepage": "https://github.com/aristanetworks/purescript-backend-optimizer#readme",
+  "devDependencies": {
+    "esbuild": "^0.15.5"
+  }
+}
